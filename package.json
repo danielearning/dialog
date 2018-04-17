@@ -1,16 +1,20 @@
 {
-  "author": "Tomás Pollak <tomas@forkhq.com> (http://forkhq.com)",
+  "author": "Daniel Martínez <danielearning@gmail.com>",
   "name": "dialog",
   "description": "Show alert dialogs using Node.",
-  "version": "0.3.1",
+  "version": "0.1.0",
   "repository": {
-    "url": "https://github.com/tomas/dialog"
+    "url": "https://github.com/danielearning/dialog"
   },
   "bin": {
     "show_dialog": "./bin/dialog.js"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "@log4js-node/log4js-api": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
