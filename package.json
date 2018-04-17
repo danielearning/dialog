@@ -3,6 +3,7 @@
   "name": "dialog",
   "description": "Show alert dialogs using Node.",
   "version": "0.1.0",
+  "license": "MIT",
   "repository": {
     "url": "https://github.com/danielearning/dialog"
   },

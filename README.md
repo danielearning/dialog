@@ -3,6 +3,7 @@ Dialog
 
 Simple wrapper around zenity, osascript and vbscript that lets you
 show native alert dialogs on Linux, OSX and Windows (including `zeit/pkg`'ed apps and maybe other packaged ones), respectively.
+Supports `log4js`, using logger `dialog`.
 
 Example
 -----
