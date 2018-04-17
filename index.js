@@ -134,7 +134,7 @@ module.exports = {
         } else { // Script must be copied from snapshot to filesystem
           fs.mkdtemp(path.join(os.tmpdir(), 'dialog-'), (err, folder) => {
             const vbDestination = path.join(folder, 'msgbox.vbs');
-            const callbackClean = (code, stdout, stderr) => {
+            const callbackClean = (err, code, stdout, stderr) => {
               fs.unlink(vbDestination, (err) => {
                 // The dialog was shown, don't fail...
                 if (err) { logger.warn(err); }
