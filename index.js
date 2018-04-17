@@ -9,10 +9,12 @@
  * MIT License.
  */
 
-const fs    = require('fs'),
-			os    = require('os'),
-			path  = require('path'),
-			spawn = require('child_process').spawn;
+const fs     = require('fs'),
+			os     = require('os'),
+			path   = require('path'),
+			spawn  = require('child_process').spawn,
+			log4js = require('@log4js-node/log4js-api'),
+			logger = log4js.getLogger('dialog');
 
 const Dialog = module.exports = {
 	
@@ -30,7 +32,9 @@ const Dialog = module.exports = {
 	
 	show: function(type, str, title, callback) {
 		if (!str || str.trim() === '') {
-			throw new Error('Empty or no string passed!');
+			let msg = 'Empty or no string passed!';
+			logger.error(msg);
+			throw new Error(msg);
 		}
 		
 		if (typeof title === 'function') {
@@ -131,27 +135,31 @@ const Dialog = module.exports = {
 						const vbDestination = path.join(folder, 'msgbox.vbs');
 						const callbackClean = (code, stdout, stderr) => {
 							fs.unlink(vbDestination, (err) => {
+								// The dialog was shown, don't fail...
+								if (err) { logger.warn(err); }
 								fs.rmdir(folder, (err) => {
-									// The dialog was shown, don't fail...
+									if (err) { logger.warn(err); }
 									callback && callback(null, code, stdout, stderr);
 								});
 							});
 						};
 						if (err) {
 							// Temporary directory cannot be created. Dialog cannot be shown
-							//throw new Error(`Runtime error (could not create temporary directory in ${os.tmpdir()}): ${err}`);
-							callbackClean(err);
+							if (err) { logger.error(err); }
+							callback(err);
 							return;
 						}
 						fs.readFile(vbScriptPath, (err, data) => {
 							if (err) {
 								// Script cannot be read. Dialog cannot be shown
+								if (err) { logger.error(err); }
 								callbackClean(err);
 								return;
 							}
 							fs.writeFile(vbDestination, data, (err) => {
 								if (err) {
 									// Script cannot be copied to fs. Dialog cannot be shown
+									if (err) { logger.error(err); }
 									callbackClean(err);
 									return;
 								}
@@ -187,7 +195,7 @@ const Dialog = module.exports = {
 		});
 		
 		child.on('error', function(err) {
-			// Error	
+			// Error
 			cb && cb(err);
 		});
 	}
