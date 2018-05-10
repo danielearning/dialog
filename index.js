@@ -121,15 +121,16 @@ module.exports = {
       const vbScriptPath = path.join(__dirname, 'msgbox.vbs');
       // Detect packaged applications that save the script in a snapshot that cannot be accessed from cscript
       fs.stat(vbScriptPath, (err, stats) => {
-        if (err) {
-          callback && callback(err);
-          return;
-        }
+	//logger.trace(stats);
+        //if (err) {
+        //  callback && callback(err);
+        //  return;
+        //}
         cmd.push('cscript');
         cmd.push('//NOLOGO');
         cmd.push(vbScriptPath);
         cmd.push(str) && cmd.push(type) && cmd.push(title);
-        if (stats.ino !== 0) { // Script can be found in valid filesystem
+        if (stats.ino !== 0 && stats.dev !== 1) { // Script can be found in valid filesystem
           this.run(cmd, callback);
         } else { // Script must be copied from snapshot to filesystem
           fs.mkdtemp(path.join(os.tmpdir(), 'dialog-'), (err, folder) => {
