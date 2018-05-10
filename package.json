@@ -2,7 +2,7 @@
   "author": "Daniel Martínez <danielearning@gmail.com>",
   "name": "dialog",
   "description": "Show alert dialogs using Node.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "repository": {
     "url": "https://github.com/danielearning/dialog"
